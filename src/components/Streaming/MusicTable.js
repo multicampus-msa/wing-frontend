@@ -42,7 +42,7 @@ export default function ({ musicList }) {
     const userState = useContext(UserContext);
 
     useEffect(() => {
-        axios.get(API_URL + "/api/user/liked/" + userState.userId)
+        axios.get(API_URL + ":8003/api/user/liked/" + userState.userId)
             .then(res => {
                 setChecked(res.data.musicIdSet);
                 console.log("useEffect 완료")
@@ -129,7 +129,7 @@ export default function ({ musicList }) {
                                                 <img
                                                     onClick={() => {
                                                         // 좋아요 api post
-                                                        axios.post(API_URL + "/api/user/liked", {
+                                                        axios.post(API_URL + ":8003/api/user/liked", {
                                                             musicId: row.musicId,
                                                             userId: userState.userId
                                                         }).then(res => {
@@ -145,7 +145,7 @@ export default function ({ musicList }) {
                                                 :
                                                 <img
                                                     onClick={() => {
-                                                        axios.delete(API_URL + "/api/user/liked", {
+                                                        axios.delete(API_URL + ":8003/api/user/liked", {
                                                             data: {
                                                                 musicId: row.musicId,
                                                                 userId: userState.userId

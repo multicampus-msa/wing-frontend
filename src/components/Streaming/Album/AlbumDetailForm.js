@@ -22,7 +22,7 @@ const AlbumDetailForm = ({ id }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + "/api/album/" + id)
+        axios.get(API_URL + ":8003/api/album/" + id)
             .then(res => {
                 setAlbumObject(res.data);
                 setIsResponseOk(true);

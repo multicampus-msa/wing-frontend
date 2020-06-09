@@ -23,7 +23,7 @@ const StreamingMain = () => {
     const userState = useContext(UserContext);
 
     useEffect(() => {
-        axios.get(API_URL + "/api/music/name=")
+        axios.get(API_URL + ":8003/api/music/name=")
             .then(res => {
                 setRecommendObject(res.data.slice(0, 9));
                 setIsResponseOk(true);

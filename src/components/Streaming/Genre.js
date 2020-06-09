@@ -32,25 +32,25 @@ const Genre = () => {
     const [isResponseOk, setIsResponseOk] = useState(false);
 
     useEffect(() => {
-        axios.get(API_URL + "/api/music/genre=일렉트로니카")
+        axios.get(API_URL + ":8003/api/music/genre=일렉트로니카")
             .then(res => {
                 setElectronicaObject(res.data.slice(0, 5));
             })
             .catch(err => alert(err))
 
-        axios.get(API_URL + "/api/music/genre=팝")
+        axios.get(API_URL + ":8003/api/music/genre=팝")
             .then(res => {
                 setPopObject(res.data.slice(0, 5));
             })
             .catch(err => alert(err))
 
-        axios.get(API_URL + "/api/music/genre=힙합")
+        axios.get(API_URL + ":8003/api/music/genre=힙합")
             .then(res => {
                 setHiphopObject(res.data.slice(0, 5));
             })
             .catch(err => alert(err))
 
-        axios.get(API_URL + "/api/music/genre=락")
+        axios.get(API_URL + ":8003/api/music/genre=락")
             .then(res => {
                 setRockObject(res.data.slice(0, 5));
             })

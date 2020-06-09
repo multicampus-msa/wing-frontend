@@ -20,7 +20,7 @@ const MusicDetailForm = ({ id }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + "/api/music/" + id)
+        axios.get(API_URL + ":8003/api/music/" + id)
             .then(res => {
                 setMusicObject(res.data);
                 setIsResponseOk(true);
