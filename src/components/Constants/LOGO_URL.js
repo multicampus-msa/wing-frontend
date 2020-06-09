@@ -1,0 +1,1 @@
+export default "https://i.ibb.co/hgvS0jy/image.jpg"
