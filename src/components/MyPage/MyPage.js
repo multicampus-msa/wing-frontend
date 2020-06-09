@@ -1,230 +1,211 @@
-import React, {useState, useEffect, useContext} from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components'
-import axios from 'axios';
+import MenuButtons from "./Main/MenuButtons";
+import axios from 'axios'
+import LOGO_URL from "./Constants/LOGO_URL";
+import LoginButton from './Main/LoginButton';
+import Root from './Root'
+import UserContext from "./Context/UserContext";
+import Avatar from "@material-ui/core/Avatar";
 import API_URL from '../Constants/API_URL';
-import MusicTable from '../Streaming/MusicTable'
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
-import UserContext from "../Context/UserContext";
 
-import Table from '@material-ui/core/Table';
+const LogoDiv = styled.div`
+  display: grid;
+  grid-template-columns: 300px 300px 175px 100px 150px;
+  grid-template-rows: 50px 25px 45px;
+  justify-content: center;
+  font-family: "NanumSquare", sans-serif;
+  font-weight: bold;
+  font-size: large;
+  
+  .avatar {
+    margin-left: 1rem;
+    margin-top: -0.9rem;
+    grid-column: 4;
+    grid-row: 2;
+  }
+  
+  .MuiAvatar-root {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .logo {
+    margin-left: 2rem;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  
+  .loginButton {
+    margin-left: 1.5rem;
+    grid-column: 5;
+    grid-row: 3;
+  }
+  
+  .hello {
+    margin-top: 2rem;
+    grid-column: 5;
+    grid-row: 1;
+  }
+  
+  .userName {
+    grid-column: 5;
+    grid-row: 2;
+  }
+`
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+const ButtonDiv = styled.div`
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+`
 
+const Menu = ({ history }) => {
 
-import PropTypes from 'prop-types';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+    const [token, setToken] = useState(null);
+    const [auth2, setAuth2] = useState(null);
+    const [userState, setUserState] = useState({
+        userId: "",
+        name: "",
+        email: "",
+        imageUri: "",
+    })
 
+    const login = () => {
+        auth2.signIn().then(googleUser => {
+            let profile = googleUser.getBasicProfile();
+            const data = {
+                userId: profile.getId(),
+                name: profile.getName(),
+                email: profile.getEmail(),
+                imageUri: profile.getImageUrl(),
+                role: "USER",
+            }
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        maxWidth: '36ch',
-        backgroundColor: theme.palette.background.paper,
-        display: 'flex',
-        '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    inline: {
-        display: 'inline',
-    },
-    table: {
-      minWidth: 650,
-  },
-}));
+            setUserState({
+                ...userState,
+                userId: profile.getId(),
+                name: profile.getName(),
+                email: profile.getEmail(),
+                imageUri: profile.getImageUrl(),
+            })
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-});
+            const targetUrl = API_URL+':8002/api/user/save'
+            console.log(data);
+            axios.post(targetUrl, data)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            // console.log('ID : '+profile.getId());
+            // console.log('Name : '+profile.getName());
+            // console.log('Image URL : '+profile.getImageUrl());
+            // console.log('Email : '+profile.getEmail());
+            setToken(googleUser.getAuthResponse().id_token)
+            window.sessionStorage.setItem("token", googleUser.getAuthResponse().id_token);
+            window.sessionStorage.setItem("userState", JSON.stringify(data));
+        })
+    }
+    const logout = () => {
+        if (auth2 === null)
+            googleSDK()
+        setToken(null);
+        setUserState(
+            {
+                userId: "",
+                name: "",
+                email: "",
+                imageUrl: ""
+            }
+        )
+        console.log("로그아웃 합니다");
+        if (auth2) auth2.disconnect();
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      { date: '2020-01-05', customerId: '11091700', amount: 3 },
-      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
-    ],
-  };
-}
+        window.sessionStorage.clear()
+        
+        history.push("/Home");
+    }
+    const googleSDK = () => {
+        // platform.js 스크립트 로드 후 .. 
+        window['googleSDKLoaded'] = () => {
+            window['gapi'].load('auth2', () => {
+                setAuth2(window['gapi'].auth2.init({
+                    client_id: '4141518158-olfgnnv29g8163c0v5saq6dorpg806l2.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                    scope: 'profile email'
+                }));
+            })
+        }
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'google-jssdk'));
+    }
+    useEffect(() => { // token 값이 업데이트 될 때만 실행
+        const storageToken = window.sessionStorage.getItem("token")
+        const storageState = window.sessionStorage.getItem("userState")
+        if (token === null && storageToken) {
+            setToken(storageToken)
+            setUserState(JSON.parse(storageState))
+        }
+        else if (token === null)
+            googleSDK();
+    }, [token]);
 
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  const classes = useRowStyles();
+    return (
+        <UserContext.Provider value={userState}>
+            <Fragment>
+                <LogoDiv>
+                    <div className="logo">
+                        <Link to="/"><img src={LOGO_URL}
+                                          alt="Win:G 로고"
+                                          style={{ width: "330px", height: "120px" }}
+                        /></Link>
+                    </div>
 
-  return (
-    <React.Fragment>
-      <TableRow className={classes.root}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
+                    <div className="avatar">
+                        {
+                            token ?
+                                <>
+                                    <Link to={"/mypage/" + userState.name}>
+                                        <Avatar alt="Remy Sharp" src={userState.imageUrl}/>
+                                    </Link>
+                                </>
+                                : <p></p>
+                        }
+                    </div>
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
+                    <div className="hello">
+                        {token ? <p>안녕하세요 </p> : <p></p>}
+                    </div>
+
+                    <div className="userName">
+                        {token ? <p>{userState.name} 님^^</p> : <p></p>}
+                    </div>
+
+                    <div className="loginButton">
+                        <LoginButton token={token} name={userState.name} login={login} logout={logout}/>
+                    </div>
+                </LogoDiv>
+                <ButtonDiv>
+                    <MenuButtons/>
+                </ButtonDiv>
+                <hr/>
+                <Root/>
+            </Fragment>
+        </UserContext.Provider>
+    )
 };
 
-const rows = [  // 동적으로 데이터를 넣자
-  createData('아티스트 A', Date().toString(), 6.0, 24, 4.0, 3.99),
-  createData('아티스트 B', 237, 9.0, 37, 4.3, 4.99),
-  createData('아티스트 C', 262, 16.0, 24, 6.0, 3.79),
-  createData('아티스트 D', 305, 3.7, 67, 4.3, 2.5),
-];
-
-
-const MyPage = () => {
-  const classes = useStyles();  
-  const userState = useContext(UserContext);
-  const [likedMusicList, setLikedMusicList] = useState([]);
-
- // const [supportingMusician, setSupportingMusician] = useState({});
-  useEffect(()=>{
-      // 좋아요 한 음악 가져오기       
-      if(userState.userId === "") return;
-      axios.get(API_URL+"/api/user/liked/"+ userState.userId)
-      .then(res =>{
-        console.log(res.data); // musicIdSet에 들어있는 musicId, 
-        setLikedMusicList(res.data.musicSet);
-        console.log(likedMusicList ) // empty
-      })
-      .catch(err=>alert("로그인하세요"))
-      //axios.get(API_URL+"/api/mypage/likedmusic")
-
-  }, [userState.userId]) //  [userId, likedMusicList] -> 무한 렌더링
-  
-// 후원 뮤지션 : Collapsible table 사용  https://material-ui.com/components/tables/#collapsible-table
-  
-  return (
-    <>
-    <CssBaseline/>
-
-    <Container maxWidth="md">   
-        <Typography component="div" style={{backgroundColor: "whitesmoke", width: '60vw', height: '20vh'}}>
-            <div align="center">
-              <Avatar src = {userState.imageUrl } alt = "Profile Image"/>
-              <h3>{userState.name}님 안녕하세요</h3>
-              {/* 간격 띄어쓰기 */}
-              <div align="left">
-                <h4>{userState.name}님이 좋아하는 음악 입니다</h4>
-              </div>
-            </div>
-        </Typography>
-           
-        <Typography component="table" style={{backgroundColor: "whitesmoke", width: '60vw', height: '50vh'}}>
-              <MusicTable musicList={likedMusicList} />  
-        </Typography>
-    
-
-        <Typography component="table" style={{backgroundColor: "whitesmoke", width: '60vw', height: '50vh'}}>
-          <h4>{userState.name}님이 후원하는 아티스트 입니다</h4> 
-          <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell>아티스트 이름</TableCell>
-                  <TableCell align="right">후원일자</TableCell>
-                  <TableCell align="right">후원금액</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <Row key={row.name} row={row} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>          
-        </Typography>
-    </Container>
-    </>
-  );
-}
-export default MyPage;
+export default withRouter(Menu);
