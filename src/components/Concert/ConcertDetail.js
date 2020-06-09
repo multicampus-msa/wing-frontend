@@ -80,7 +80,7 @@ const ConcertDetail = ({match}) => {
 
   
     useEffect(() => {
-      axios.get(API_URL + '/api/concert/' + match.params.concertId)
+      axios.get(API_URL + ':8004/api/concert/' + match.params.concertId)
         .then(res => setConcert(res.data));
         window.scrollTo(0,0);
     }, [match.params.concertId]);

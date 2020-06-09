@@ -51,7 +51,7 @@ const ConcertPoster = ({concertId}) => {
   const [concert, setConcert] = useState({});
 
   useEffect(() => {
-    axios.get(API_URL + '/api/concert/' + concertId)
+    axios.get(API_URL + ':8004/api/concert/' + concertId)
       .then(res => setConcert(res.data));
   },[concertId]);
 
