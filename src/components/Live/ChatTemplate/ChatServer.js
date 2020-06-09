@@ -7,8 +7,8 @@ let roomName;
 const server = http.createServer(app);
 
 
-server.listen(3001, () => {
-    console.log('Server Running at http://127.0.0.1:3001'); 
+server.listen(8007, () => {
+    console.log('Server Running'); 
 })
 
 var io = socketio.listen(server);

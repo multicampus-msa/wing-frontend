@@ -47,7 +47,7 @@ const AlbumSearch = ({searchWord}) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + "/api/album?", {
+        axios.get(API_URL + ":8003/api/album?", {
             params: {
                 'name': searchWord
             }
