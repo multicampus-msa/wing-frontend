@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import axios from 'axios';
+import API_URL from "../Constants/API_URL";
 
 const columns = [
   { id: 'index', label: '#', minWidth: 150 },
@@ -57,7 +58,7 @@ export default function SupportTable(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get("http://localhost:8080/api/transaction/artist/" + props.artistId)
+    axios.get(API_URL + ":8005/api/support/artist/" + props.artistId)
       .then(res => res.data.sort((a, b) => {
         const dateA = new Date(a.datetime);
         const dateB = new Date(b.datetime);

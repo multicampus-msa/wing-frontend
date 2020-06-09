@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
+import API_URL from "../../Constants/API_URL";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,7 +55,7 @@ const ChatInput = ({videoId}) => {
             alert('메시지를 입력하세요.')
         }
         else {
-            const socket = socketio.connect('http://localhost:3001');
+            const socket = socketio.connect(API_URL + ':8007');
             socket.emit('joinRoom', {roomName: videoId});
             const {name, imageUrl} = userState;
             socket.emit('message', {name : name, message : message, imageUrl: imageUrl}); 

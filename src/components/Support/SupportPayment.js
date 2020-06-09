@@ -43,7 +43,7 @@ function SupportPayment({history, match}) {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + "/api/artist/" + match.params.artistId)
+        axios.get(API_URL + ":8003/api/artist/" + match.params.artistId)
           .then(res => setArtist(res.data))
           .catch(err => alert(err))
         setBuyerName(userState.name)
