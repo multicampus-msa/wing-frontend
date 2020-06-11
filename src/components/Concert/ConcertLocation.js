@@ -17,7 +17,6 @@ const {kakao} = window;
 const ConcertLocation = ({place}) => {
     const classes = useStyles();
 
-
     useEffect(() => {
         kakao.maps.load(() => {
             let el = document.getElementById('map');
