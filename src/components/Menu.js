@@ -71,7 +71,7 @@ const Menu = ({ history }) => {
         userId: "",
         name: "",
         email: "",
-        imageUrl: "",
+        imageUri: "",
     })
 
     const login = () => {
@@ -81,7 +81,7 @@ const Menu = ({ history }) => {
                 userId: profile.getId(),
                 name: profile.getName(),
                 email: profile.getEmail(),
-                imageUrl: profile.getImageUrl(),
+                imageUri: profile.getImageUrl(),
                 role: "USER",
             }
 
@@ -90,7 +90,7 @@ const Menu = ({ history }) => {
                 userId: profile.getId(),
                 name: profile.getName(),
                 email: profile.getEmail(),
-                imageUrl: profile.getImageUrl(),
+                imageUri: profile.getImageUrl(),
             })
 
             const targetUrl = API_URL+':8002/api/user/save'
@@ -120,7 +120,7 @@ const Menu = ({ history }) => {
                 userId: "",
                 name: "",
                 email: "",
-                imageUrl: ""
+                imageUri: ""
             }
         )
         console.log("로그아웃 합니다");
@@ -179,7 +179,7 @@ const Menu = ({ history }) => {
                             token ?
                                 <>
                                     <Link to={"/mypage/" + userState.name}>
-                                        <Avatar alt="Remy Sharp" src={userState.imageUrl}/>
+                                        <Avatar alt="Remy Sharp" src={userState.imageUri}/>
                                     </Link>
                                 </>
                                 : <p></p>
