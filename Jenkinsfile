@@ -2,7 +2,7 @@ node {
      stage('Clone repository') {
          checkout scm
      }
-
+     tools {nodejs "node"}
      stage('yarn build') {
          sh 'npm install -g yarn'
          sh 'yarn install'
