@@ -1,1 +1,1 @@
-export default "http://10.178.0.43"
+export default "http://wingproject.shop"
