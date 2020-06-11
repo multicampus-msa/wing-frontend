@@ -151,8 +151,18 @@ const ConcertTab = ({place, artistList}) => {
 
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <p className={classes.place}>공연장 : {place}</p>
-          <ConcertLocation place={place}/>
+        {
+          place !== undefined ? (place.map((concertplace) => {
+            return (
+              <>
+                <p className={classes.place}>공연장 : {concertplace}</p>
+                <ConcertLocation place={concertplace}/>
+              </>
+            )
+          }))
+          :
+          <span>loading...</span>
+        }
         </TabPanel>
         <TabPanel className={classes.box} value={value} index={2}>
           <h5>티켓 수령 방법 안내</h5>
