@@ -35,6 +35,8 @@ function PlayList() {
     const [videos,
         setVideos] = useState([]);
 
+    const genres = ["포크 / 팝 / 발라드", "힙합", "락"];
+
     useEffect(() => {
         BringPlayListData({
             key: YOUTUBE_DATA_API_KEY
@@ -48,41 +50,54 @@ function PlayList() {
             <div className={classes.wrapperTitle}>
                 <p style={{ fontSize: "29px", borderBottom: "1px solid", borderColor: "#c2c2c2", gridColumn: "1 / 7", marginTop: '20px'}}>장르별 영상 목록</p>
             </div>
-            <div className={classes.wrapperVideo}>
-            {videos.map((video, index) => (
-                    <Box key={index} width={220} marginRight={0.6} my={5}>
-                        {video ? (
-                        <Link to={'/live/videoPlayer/' + video.snippet.resourceId.videoId + '/' + video.snippet.title + '/' + video.snippet.publishedAt}>
-                            <img style={{ width: 220, height: 124 }} alt={video.snippet.title} src={video.snippet.thumbnails.default.url} />
-                        </Link>
-                        ) : (
-                        <Skeleton variant="rect" width={220} height={124} />
-                        )}
-
-                        {video ? (
-                        <div className={classes.text}>
-                            <Box pr={2}>
-                            <Typography gutterBottom variant="body2">
-                                {video.snippet.title}
-                            </Typography>
-                            <Typography display="block" variant="caption" color="textSecondary">
-                                {/* {video.snippet.channelTitle} */}
-                                Win:G
-                            </Typography>
-                            <Typography variant="caption" color="textSecondary">
-                                {video.snippet.publishedAt.substr(0, 10)}
-                            </Typography>
-                            </Box>
+            {
+                console.log(videos)
+            }
+            {
+                genres.map((genre, genreIndex) => (
+                    <>
+                        <div className={classes.wrapperTitle}>
+                            <p style={{ fontSize: "23px", borderBottom: "1px solid", borderColor: "#c2c2c2", gridColumn: "1 / 7", marginTop: '20px'}}>{genre}</p>
                         </div>
-                        ) : (
-                        <Box pt={0.5}>
-                            <Skeleton />
-                            <Skeleton width="60%" />
-                        </Box>
-                        )}
-                    </Box>
-                ))}
-            </div>
+                        <div className={classes.wrapperVideo}>
+                        {videos.map((video, videoIndex) => (
+                            Math.floor(videoIndex / 4) === genreIndex &&
+                                <Box key={videoIndex} width={220} marginRight={0.6} marginBottom={1.2}>
+                                    {video ? (
+                                    <Link to={'/live/videoPlayer/' + video.snippet.resourceId.videoId + '/' + video.snippet.title + '/' + video.snippet.publishedAt}>
+                                        <img style={{ width: 220, height: 124 }} alt={video.snippet.title} src={video.snippet.thumbnails.default.url} />
+                                    </Link>
+                                    ) : (
+                                    <Skeleton variant="rect" width={220} height={124} />
+                                    )}
+
+                                    {video ? (
+                                    <div className={classes.text}>
+                                        <Box pr={2}>
+                                        <Typography gutterBottom variant="body2">
+                                            {video.snippet.title}
+                                        </Typography>
+                                        <Typography display="block" variant="caption" color="textSecondary">
+                                            {/* {video.snippet.channelTitle} */}
+                                            Win:G
+                                        </Typography>
+                                        <Typography variant="caption" color="textSecondary">
+                                            {video.snippet.publishedAt.substr(0, 10)}
+                                        </Typography>
+                                        </Box>
+                                    </div>
+                                    ) : (
+                                    <Box pt={0.5}>
+                                        <Skeleton />
+                                        <Skeleton width="60%" />
+                                    </Box>
+                                    )}
+                                </Box>
+                            ))}
+                        </div>
+                    </>
+                ))
+            }
         </>
     )
 }

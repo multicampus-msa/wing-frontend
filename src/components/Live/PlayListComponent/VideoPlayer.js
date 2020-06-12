@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import YouTube from 'react-youtube';
+import RelatedList from './../RelatedListComponent/RelatedList';
 
 const useStyles = makeStyles((theme) => ({
     wrapperBody: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     wrapperTitle: {
         marginBottom: '10px',
-        width: '900px',
+        width: '961px',
         fontFamily: "NanumSquare",
     },
     text: {
@@ -49,6 +50,7 @@ function VideoPlayer({match}) {
                     <p className={classes.videoTitle}>{match.params.title}</p>
                     <p>{match.params.date.substr(0, 10)}</p>
                 </div>
+                <RelatedList/>
             </div>
         </>
     );
