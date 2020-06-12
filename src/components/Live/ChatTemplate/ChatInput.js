@@ -57,8 +57,8 @@ const ChatInput = ({videoId}) => {
         else {
             const socket = socketio.connect(API_URL + ':8007');
             socket.emit('joinRoom', {roomName: videoId});
-            const {name, imageUrl} = userState;
-            socket.emit('message', {name : name, message : message, imageUrl: imageUrl}); 
+            const {name, imageUri} = userState;
+            socket.emit('message', {name : name, message : message, imageUri: imageUri}); 
         }
         setMessage('');
     }
@@ -71,7 +71,7 @@ const ChatInput = ({videoId}) => {
 
     return (
         <div style={{display: 'flex'}}>
-            <Avatar src={userState.imageUrl} style={{width: '45px', height: '45px', marginLeft: '5px', marginTop: '5px'}}/>
+            <Avatar src={userState.imageUri} style={{width: '45px', height: '45px', marginLeft: '5px', marginTop: '5px'}}/>
             <div className={classes.root}>
                 <div className={classes.name}>
                     {

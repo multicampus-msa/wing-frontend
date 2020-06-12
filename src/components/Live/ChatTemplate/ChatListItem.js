@@ -29,7 +29,7 @@ const ChatListItem = ({logs}) => {
                 logs.map((value) => (
                     <ListItem key={value.key}>
                         <ListItemAvatar>
-                            <Avatar src={value.imageUrl} />
+                            <Avatar src={value.imageUri} />
                         </ListItemAvatar>
                         <ListItemText id={value.key} primary={value.name} secondary={value.message} />
                     </ListItem>
