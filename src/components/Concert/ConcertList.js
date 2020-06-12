@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConcertList = () => {
     const classes = useStyles();
-    const index = [0, 1, 2, 3];
+    const index = [0, 1, 2, 3, 4, 5];
 
     useEffect(() => {
           window.scrollTo(0,0);
