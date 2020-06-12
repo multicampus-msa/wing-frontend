@@ -6,7 +6,6 @@ node {
             env.NODEJS_HOME = "${tool 'nodejs'}"
          	env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
 
-            sh 'npm install -g yarn'
             sh 'yarn install'
             sh 'yarn build'
          }
