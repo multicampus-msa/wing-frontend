@@ -174,7 +174,7 @@ const MyPage = () => {
     <Container maxWidth="md">   
         <Typography component="div" style={{backgroundColor: "whitesmoke", margin:'auto',}}>
             <div align="center">
-              <Avatar src = {userState.imageUrl } alt = "Profile Image"/>
+              <Avatar src = {userState.imageUri } alt = "Profile Image"/>
               <h3>{userState.name}님 안녕하세요</h3>
               {/* 간격 띄어쓰기 */}
               <div align="left">
