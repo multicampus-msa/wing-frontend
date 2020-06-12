@@ -1,1 +1,1 @@
-export default "http://wingproject.shop"
+export default "https://wingproject.shop"
