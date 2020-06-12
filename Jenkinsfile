@@ -3,7 +3,7 @@ node {
              checkout scm
          }
          stage('yarn build') {
-            env.NODEJS_HOME = "${tool 'Node 6.x'}"
+            env.NODEJS_HOME = "${tool 'nodejs'}"
          	env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
 
             sh 'npm install -g yarn'
