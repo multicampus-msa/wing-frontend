@@ -1,6 +1,5 @@
 pipeline {
 
-    tools {nodejs "node"}
     node {
          stage('Clone repository') {
              checkout scm
