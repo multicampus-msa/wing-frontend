@@ -7,7 +7,6 @@ import SupportPage from './Support/SupportPage'
 import ConcertPage from './Concert/ConcertPage'
 import SearchPage from './Search/SearchPage';
 import MyPage from './MyPage/MyPage';
-import Certbot from "./Certbot";
 
 function Root() {
     return (
@@ -20,7 +19,6 @@ function Root() {
             <Route path="/concert" component={ConcertPage}/>
             <Route path="/search/:searchWord" component={SearchPage}/>
             <Route path="/mypage/:userName" component={MyPage}/>
-            <Route path="/.well-known/acme-challenge/YC-zKwUg1Gqzw8cRMBfV3YVLlWRG9DH96UF0Vp63QN4" component={Certbot}/>
         </>
     );
 }
