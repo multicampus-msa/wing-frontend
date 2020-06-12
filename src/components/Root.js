@@ -20,7 +20,7 @@ function Root() {
             <Route path="/concert" component={ConcertPage}/>
             <Route path="/search/:searchWord" component={SearchPage}/>
             <Route path="/mypage/:userName" component={MyPage}/>
-            <Route path=".well-known/acme-challenge/InyFgBnuIiknGQ68NHS2Q1Tnvva2KAvD7yfQU6JUzFY" component={Certbot}/>
+            <Route path="/.well-known/acme-challenge/InyFgBnuIiknGQ68NHS2Q1Tnvva2KAvD7yfQU6JUzFY" component={Certbot}/>
         </>
     );
 }
