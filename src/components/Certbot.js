@@ -1,8 +1,17 @@
 import React from 'react'
 
 const Certbot = () => {
+
     return (
-        <div>InyFgBnuIiknGQ68NHS2Q1Tnvva2KAvD7yfQU6JUzFY.PCE0tiBdA9cmwHsDNVdpFOROtcfzemVHVNApdGmAFM</div>
+        <>
+            <div>
+                YC-zKwUg1Gqzw8cRMBfV3YVLlWRG9DH96UF0Vp63QN4.PCE0tiBdA9cmwHsDNVdpFOROtcfze_mVHVNApdGmAFM
+            </div>
+            <p>
+                왜안되는거야?
+                <button>ㅇㄷㅇㄷㅇ</button>
+            </p>
+        </>
     )
 }
 
