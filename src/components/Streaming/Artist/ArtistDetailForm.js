@@ -20,7 +20,7 @@ const ArtistDetailForm = ({ id }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + ":8003/api/artist/" + id)
+        axios.get(API_URL + "/api/artist/" + id)
             .then(res => {
                 setArtistObject(res.data);
                 setAlbumObject(res.data.albumList);

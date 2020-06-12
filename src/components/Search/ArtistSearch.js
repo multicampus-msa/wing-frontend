@@ -81,7 +81,7 @@ const ArtistSearch = ({searchWord}) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + ":8003/api/artist?", {
+        axios.get(API_URL + "/api/artist?", {
             params: {
                 'name': searchWord
             }

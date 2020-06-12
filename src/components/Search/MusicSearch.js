@@ -9,7 +9,7 @@ const MusicSearch = ({searchWord}) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get(API_URL + `:8003/api/music/name=${searchWord}`)
+        axios.get(API_URL + `/api/music/name=${searchWord}`)
             .then(res => {
                 setMusicList(res.data)
             })

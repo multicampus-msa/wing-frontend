@@ -149,7 +149,7 @@ const MyPage = () => {
   useEffect(()=>{
       // 좋아요 한 음악 가져오기       
       if(userState.userId === "") return;
-      axios.get(API_URL+":8003/api/music/liked/"+ userState.userId)
+      axios.get(API_URL+"/api/music/liked/"+ userState.userId)
       .then(res =>{
         console.log(res.data); // musicIdSet에 들어있는 musicId, 
         setLikedMusicList(res.data.musicSet);

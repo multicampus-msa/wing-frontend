@@ -45,7 +45,7 @@ export default function SupportCard(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get(API_URL + ":8003/api/artist/" + props.artistId)
+    axios.get(API_URL + "/api/artist/" + props.artistId)
       .then(res => setArtist(res.data))
   }, [props.artistId])
 
