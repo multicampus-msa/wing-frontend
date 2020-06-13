@@ -62,7 +62,7 @@ function SupportList ({match}) {
                         })
                     }
                 </div>
-                <div className={classes.page}>
+                {/* <div className={classes.page}>
                     <Pagination aria-label="Page navigation">
                     <PaginationItem>
                         <PaginationLink>
@@ -98,7 +98,7 @@ function SupportList ({match}) {
                         </PaginationLink>
                     </PaginationItem>
                     </Pagination>
-                </div>
+                </div> */}
             </div>
         </div>
     )
