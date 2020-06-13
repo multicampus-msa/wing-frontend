@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         textAlign: 'center',
         fontWeight: 'bold',
+        fontFamily: 'NanumSquare',
     },
     line: {
         borderWidth: '2px',

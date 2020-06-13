@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     margin: '10px',
     border: '1px solid gray',
+    fontFamily: 'NanumSquare',
     '&:hover': {
       transform: 'scale(1.02)',
       boxShadow: '0 16px 70px -12.125px rgba(0,0,0,0.3)',
@@ -28,13 +29,15 @@ const useStyles = makeStyles((theme) => ({
   headerTitle: {
     fontSize: '20px',
     fontWeight: "bold",
+    fontFamily: 'NanumSquare',
   },
   headerTitleSmall: {
     fontSize: '15px',
     fontWeight: "bold",
+    fontFamily: 'NanumSquare',
   },
   headerRoot: {
-    background: "#e69cff",
+    background: "#e0e0e0",
     height: "40px",
   },
 }));
