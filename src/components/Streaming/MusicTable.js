@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,6 +14,7 @@ import styled from "styled-components"
 import axios from 'axios'
 import API_URL from "../Constants/API_URL";
 import UserContext from "../Context/UserContext";
+import Playlist from 'react-mp3-player'
 
 const useStyles = makeStyles({
     table: {
@@ -34,12 +36,23 @@ const ButtonDiv = styled.div`
   }
 
 `
+const tracks = [
+    {
+        img: 'https://images.genius.com/d6cd275f9f26e63ce3b1d28e9a81f4a0.1000x1000x1.jpg',
+        name: '폰 (Feat. Hoody)',
+        desc: '우원재 - 폰 (Feat. Hoody)',
+        src: 'Still good.mp3'
+    }
+]
 
 export default function ({ musicList }) {
     const classes = useStyles();
     const [checked, setChecked] = useState({})
     const [riseUseEffect, setRiseUseEffect] = useState(false);
     const userState = useContext(UserContext);
+    const listenOnClick = () => {
+        ReactDOM.render(<Playlist tracks={tracks}/>, document.getElementById('player'));
+    }
 
     useEffect(() => {
         axios.get(API_URL + "/api/music/liked/" + userState.userId)
@@ -63,7 +76,7 @@ export default function ({ musicList }) {
     return (
         <>
             <ButtonDiv>
-                <button>
+                <button onClick={listenOnClick}>
                     <img
                         src="https://image.shutterstock.com/image-vector/play-sign-flat-style-icon-260nw-376854928.jpg"
                         alt="듣기"
