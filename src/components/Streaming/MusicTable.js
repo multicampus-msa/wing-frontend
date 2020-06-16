@@ -40,7 +40,7 @@ const tracks = [
     {
         img: 'https://images.genius.com/d6cd275f9f26e63ce3b1d28e9a81f4a0.1000x1000x1.jpg',
         name: '폰 (Feat. Hoody)',
-        desc: '우원재 - 폰 (Feat. Hoody)',
+        desc: '우원재',
         src: 'Still good.mp3'
     }
 ]
