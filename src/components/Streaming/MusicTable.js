@@ -63,9 +63,8 @@ export default function ({ musicList }) {
             .catch(() => {
                 console.log("미로그인 오류")
         })
-        ReactDOM.render(<div> </div>, document.getElementById('player'));
+        ReactDOM.unmountComponentAtNode(document.getElementById('player'));
     }, [userState.userId, riseUseEffect])
-
 
 
     if (musicList === undefined)
